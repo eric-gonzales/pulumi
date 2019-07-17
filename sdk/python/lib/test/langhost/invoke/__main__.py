@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import asyncio
 from pulumi import CustomResource, Output, log
 from pulumi.runtime import invoke
 
@@ -26,13 +27,12 @@ class MyResource(CustomResource):
             "value": value,
         })
 
+async def get_value2():
+    await asyncio.sleep(0)
+    return 42
 
-value = invoke("test:index:MyFunction", props={
-    "value": 41,
-})
-
-async def do_invoke():
-    value = await invoke("test:index:MyFunction", props={"value": 41})
+def do_invoke():
+    value = invoke("test:index:MyFunction", props={"value": 41, "value2": get_value2()})
     return value["value"]
 
 res = MyResource("resourceA", do_invoke())

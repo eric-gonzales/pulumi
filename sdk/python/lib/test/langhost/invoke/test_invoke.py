@@ -26,6 +26,7 @@ class TestInvoke(LanghostTest):
         self.assertEqual("", provider)
         self.assertDictEqual({
             "value": 41,
+            "value2": 42,
         }, args)
 
         return [], {
@@ -57,6 +58,7 @@ class TestInvokeWithFailures(LanghostTest):
         self.assertEqual("test:index:MyFunction", token)
         self.assertDictEqual({
             "value": 41,
+            "value2": 42,
         }, args)
 
         return [{"property": "value", "reason": "the invoke failed"}], {}
